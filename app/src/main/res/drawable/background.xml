@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="640dp"
+    android:viewportWidth="360"
+    android:viewportHeight="640">
+
+    <!-- Background gradasi -->
+    <path
+        android:name="background"
+        android:fillColor="@android:color/white"
+        android:pathData="M0,0h360v640h-360z"/>
+
+    <!-- Lingkaran ungu di pojok kiri atas -->
+    <path
+        android:fillColor="#BB86FC"
+        android:pathData="M-80,-80a160,160 0 1,1 160,160a160,160 0 1,1 -160,-160"/>
+
+    <!-- Lingkaran biru di pojok kanan bawah -->
+    <path
+        android:fillColor="#03DAC5"
+        android:pathData="M280,480a200,200 0 1,1 200,200a200,200 0 1,1 -200,-200"/>
+</vector>
