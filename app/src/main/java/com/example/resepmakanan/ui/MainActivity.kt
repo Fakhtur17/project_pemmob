@@ -10,7 +10,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.resepmakanan.R
 import com.example.resepmakanan.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
+import android.view.View
 
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
@@ -20,36 +24,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // ✅ Inflate layout pakai ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        // ✅ Ambil NavHostFragment dengan safe-cast
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navHostFragment) as? NavHostFragment
             ?: throw IllegalStateException("NavHostFragment not found. Pastikan id=navHostFragment ada di activity_main.xml")
 
-        // ✅ Ambil NavController dari NavHostFragment
         navController = navHostFragment.navController
 
-        // ✅ Daftar fragment yang ada di bottom nav
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.homeFragment,
                 R.id.recipesFragment,
                 R.id.favoriteRecipesFragment,
-                R.id.foodJokeFragment
-
+                R.id.profileFragment
             )
         )
 
-        // ✅ Hubungkan BottomNavigationView dengan NavController
         binding.bottomNavigationView.setupWithNavController(navController)
-
-        // ✅ Hubungkan ActionBar (judul toolbar) dengan NavController
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.loginFragment, R.id.registerFragment -> {
+                    binding.bottomNavigationView.visibility = View.GONE
+                    binding.toolbar.visibility = View.GONE
+                }
+                else -> {
+                    binding.bottomNavigationView.visibility = View.VISIBLE
+                    binding.toolbar.visibility = View.VISIBLE
+                }
+            }
+        }
     }
+
 
     // ✅ Handle tombol back di AppBar
     override fun onSupportNavigateUp(): Boolean {

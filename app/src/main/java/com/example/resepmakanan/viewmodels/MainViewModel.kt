@@ -13,6 +13,7 @@ import com.example.resepmakanan.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,47 +35,66 @@ class MainViewModel @Inject constructor(
                 val response = repository.remote.getRecipes(queries)
                 recipesResponse.value = handleFoodRecipesResponse(response)
             } catch (e: Exception) {
-                recipesResponse.value = NetworkResult.Error("Recipes not found")
+                // Penanganan error yang lebih spesifik
+                recipesResponse.value = when (e) {
+                    is UnknownHostException -> NetworkResult.Error("Tidak dapat terhubung ke server. Periksa koneksi internet Anda.")
+                    is java.net.SocketTimeoutException -> NetworkResult.Error("Timeout: Server terlalu lama merespons")
+                    is java.net.ConnectException -> NetworkResult.Error("Tidak dapat terhubung ke server")
+                    else -> NetworkResult.Error("Terjadi kesalahan: ${e.localizedMessage ?: "Unknown error"}")
+                }
             }
         } else {
-            recipesResponse.value = NetworkResult.Error("No Internet Connection")
+            recipesResponse.value = NetworkResult.Error("Tidak ada koneksi internet")
         }
     }
 
     private fun handleFoodRecipesResponse(response: Response<FoodRecipe>): NetworkResult<FoodRecipe> {
         return when {
-            response.message().toString().contains("timeout") -> {
-                NetworkResult.Error("Timeout")
-            }
-            response.code() == 402 -> {
-                NetworkResult.Error("API Key Limited")
-            }
-            response.body()?.results.isNullOrEmpty() -> {
-                NetworkResult.Error("Recipes not found")
-            }
+            response.message().toString().contains("timeout", true) -> NetworkResult.Error("Timeout")
+            response.code() == 402 -> NetworkResult.Error("API Key Limited")
+            response.code() == 401 -> NetworkResult.Error("API Key Invalid")
+            response.code() == 429 -> NetworkResult.Error("API Rate Limit Exceeded")
+            response.code() == 500 -> NetworkResult.Error("Server Error")
+            response.code() == 502 -> NetworkResult.Error("Bad Gateway")
+            response.code() == 503 -> NetworkResult.Error("Service Unavailable")
             response.isSuccessful -> {
                 val foodRecipes = response.body()
-                NetworkResult.Success(foodRecipes!!)
+                if (foodRecipes != null) {
+                    NetworkResult.Success(foodRecipes)
+                } else {
+                    NetworkResult.Error("Data tidak ditemukan")
+                }
             }
-            else -> {
-                NetworkResult.Error(response.message())
-            }
+            else -> NetworkResult.Error("Error ${response.code()}: ${response.message()}")
         }
     }
 
     private fun hasInternetConnection(): Boolean {
-        val connectivityManager = getApplication<Application>().getSystemService(
-            Context.CONNECTIVITY_SERVICE
-        ) as ConnectivityManager
+        return try {
+            val connectivityManager = getApplication<Application>().getSystemService(
+                Context.CONNECTIVITY_SERVICE
+            ) as ConnectivityManager
 
-        val activeNetwork = connectivityManager.activeNetwork ?: return false
-        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+            val activeNetwork = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
 
-        return when {
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            else -> false
+            when {
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
+            }
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    // Fungsi tambahan untuk mengecek status koneksi lebih detail
+    fun getNetworkStatus(): String {
+        return if (hasInternetConnection()) {
+            "Terhubung ke internet"
+        } else {
+            "Tidak terhubung ke internet"
         }
     }
 }

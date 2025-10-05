@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EDE7F6"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Icon resep makanan -->
+        <ImageView
+            android:id="@+id/imageRecipeIcon"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_recipe_food"
+            android:contentDescription="Icon Resep Makanan"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Email input -->
+        <EditText
+            android:id="@+id/editTextEmailRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/edittext_bg"
+            android:padding="16dp"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Password input -->
+        <EditText
+            android:id="@+id/editTextPasswordRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:background="@drawable/edittext_bg"
+            android:padding="16dp"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Confirm Password input -->
+        <EditText
+            android:id="@+id/editTextConfirmPasswordRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:background="@drawable/edittext_bg"
+            android:padding="16dp"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Button Register -->
+        <Button
+            android:id="@+id/buttonRegisterSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:background="@drawable/rounded_button"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:padding="14dp" />
+    </LinearLayout>
+</ScrollView>

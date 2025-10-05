@@ -3,5 +3,8 @@
     <item android:title="Home" android:id="@+id/homeFragment" android:icon="@drawable/ic_home" />
     <item android:title="Recipes" android:id="@+id/recipesFragment" android:icon="@drawable/ic_menu_book" />
     <item android:title="Favorites" android:id="@+id/favoriteRecipesFragment" android:icon="@drawable/ic_star" />
-    <item android:title="Jokes" android:id="@+id/foodJokeFragment" android:icon="@drawable/ic_emoji_emotions" />
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_emoji_emotions"
+        android:title="Profile" />
 </menu>

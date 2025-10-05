@@ -8,4 +8,5 @@ class Repository @Inject constructor(
     remoteDataSource: RemoteDataSource,
 ) {
     val remote = remoteDataSource
+
 }

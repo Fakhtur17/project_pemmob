@@ -8,19 +8,17 @@ class RecipesDiffUtil(
     private val newList: List<Result>
 ) : DiffUtil.Callback() {
 
-    override fun getOldListSize(): Int {
-        return oldList.size
-    }
+    override fun getOldListSize(): Int = oldList.size
 
-    override fun getNewListSize(): Int {
-        return newList.size
-    }
+    override fun getNewListSize(): Int = newList.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] === newList[newItemPosition]
+        // Bandingin pake ID, biar lebih konsisten
+        return oldList[oldItemPosition].id == newList[newItemPosition].id
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] === newList[newItemPosition]
+        // Karena Result adalah data class, == otomatis compare semua field
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 }

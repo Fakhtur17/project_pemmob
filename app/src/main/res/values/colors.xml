@@ -13,6 +13,7 @@
     <color name="darker">#424242</color>
     <color name="yellow">#FF8F00</color>
     <color name="lightPink">#FFB9B9</color>
+    <color name="green">#00C853</color>
 
     <color name="strokeColor">@color/lightMediumGray</color>
     <color name="titleColor">@color/darker</color>

@@ -1,0 +1,96 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Gambar Resep -->
+        <ImageView
+            android:id="@+id/recipeImageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
+
+        <!-- Judul + Tombol Like -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingEnd="8dp" />
+
+            <!-- Tombol Like -->
+            <ImageButton
+                android:id="@+id/btnLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_star"
+                app:tint="@color/darkPink"
+                android:contentDescription="Tombol Suka" />
+        </LinearLayout>
+
+        <!-- Likes dan Waktu -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/likesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_favorite"
+                android:padding="4dp" />
+
+            <TextView
+                android:id="@+id/minutesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_time"
+                android:padding="4dp" />
+        </LinearLayout>
+
+        <!-- badges -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <ImageView android:id="@+id/vegetarianIcon" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_check" android:visibility="gone"/>
+            <ImageView android:id="@+id/glutenFreeIcon" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_check" android:visibility="gone"/>
+            <ImageView android:id="@+id/veganIcon" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_check" android:visibility="gone"/>
+            <ImageView android:id="@+id/cheapIcon" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_check" android:visibility="gone"/>
+            <ImageView android:id="@+id/dairyFreeIcon" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_check" android:visibility="gone"/>
+            <ImageView android:id="@+id/healthyIcon" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_check" android:visibility="gone"/>
+        </LinearLayout>
+
+        <!-- Ringkasan -->
+        <TextView
+            android:id="@+id/summaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
+            android:justificationMode="inter_word"
+            android:textColor="#333333"
+            android:textAlignment="viewStart" />
+    </LinearLayout>
+</ScrollView>
