@@ -5,17 +5,53 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.resepmakanan.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.resepmakanan.adapters.RecipesAdapter
+import com.example.resepmakanan.databinding.FragmentFavoriteRecipesBinding
+import com.example.resepmakanan.util.FavoriteManager
+import com.example.resepmakanan.DetailActivity
+import androidx.core.view.isVisible
+import android.widget.Toast
 
 class FavoriteRecipesFragment : Fragment() {
+
+    private lateinit var binding: FragmentFavoriteRecipesBinding
+    private lateinit var adapter: RecipesAdapter
+    private lateinit var favoriteManager: FavoriteManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite_recipes, container, false)
+    ): View {
+        binding = FragmentFavoriteRecipesBinding.inflate(inflater, container, false)
+        favoriteManager = FavoriteManager(requireContext())
+
+        adapter = RecipesAdapter()
+        binding.favoriteRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.favoriteRecyclerView.adapter = adapter
+
+        // 🔹 Klik item favorit → buka DetailActivity
+        adapter.setOnItemClickListener { recipe ->
+            DetailActivity.start(requireActivity() as androidx.appcompat.app.AppCompatActivity, recipe)
+        }
+
+        // 🔹 Klik tombol hapus favorit
+        adapter.setOnDeleteClickListener { recipe ->
+            favoriteManager.removeFavorite(recipe) // hapus dari data favorit
+            val updatedList = favoriteManager.getFavorites()
+            adapter.setData(updatedList) // refresh RecyclerView
+
+            binding.emptyTextView.isVisible = updatedList.isEmpty()
+            Toast.makeText(requireContext(), "Resep dihapus dari favorit", Toast.LENGTH_SHORT).show()
+        }
+
+        return binding.root
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        val favorites = favoriteManager.getFavorites()
+        adapter.setData(favorites)
+        binding.emptyTextView.isVisible = favorites.isEmpty()
+    }
 }

@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.resepmakanan.databinding.RecipesRowLayoutBinding
 import com.example.resepmakanan.models.Result
 import com.example.resepmakanan.util.RecipesDiffUtil
+import android.widget.ImageView
+import com.example.resepmakanan.R
 
 class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
 
@@ -15,8 +17,13 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
     // 🔹 Tambahan: listener
     private var onItemClickListener: ((Result) -> Unit)? = null
 
+    private var onDeleteClickListener: ((Result) -> Unit)? = null
+
     fun setOnItemClickListener(listener: (Result) -> Unit) {
         onItemClickListener = listener
+    }
+    fun setOnDeleteClickListener(listener: (Result) -> Unit) {
+        onDeleteClickListener = listener
     }
 
     class MyViewHolder(private val binding: RecipesRowLayoutBinding) :
@@ -48,6 +55,12 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
         holder.itemView.setOnClickListener {
             onItemClickListener?.invoke(currentRecipe)
         }
+
+        // 🔹 Tangani klik tombol hapus
+        holder.itemView.findViewById<ImageView>(R.id.delete_favorite)?.setOnClickListener {
+            onDeleteClickListener?.invoke(currentRecipe)
+        }
+
     }
 
     override fun getItemCount(): Int = recipes.size

@@ -36,6 +36,7 @@ class DetailActivity : AppCompatActivity() {
                 else -> "Instructions"
             }
         }.attach()
+
     }
 
     companion object {
