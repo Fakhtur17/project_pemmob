@@ -22,7 +22,7 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="72dp"
         android:background="?attr/colorPrimary"
         app:titleTextColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"/>

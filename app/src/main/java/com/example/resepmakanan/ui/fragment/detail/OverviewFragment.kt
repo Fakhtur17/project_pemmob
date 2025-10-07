@@ -13,6 +13,10 @@ import com.example.resepmakanan.R
 import com.example.resepmakanan.databinding.FragmentOverviewBinding
 import com.example.resepmakanan.models.Result
 import com.example.resepmakanan.util.FavoriteManager
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
+
 
 class OverviewFragment : Fragment() {
 
@@ -62,6 +66,16 @@ class OverviewFragment : Fragment() {
                 favoriteManager.addFavorite(recipe)
             }
             updateFavoriteIcon()
+        }
+        // 🔗 Klik gambar → buka sourceUrl (jika ada)
+        binding.recipeImageView.setOnClickListener {
+            val url = recipe.sourceUrl
+            if (!url.isNullOrEmpty()) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+            } else {
+                Toast.makeText(requireContext(), "Link sumber tidak tersedia", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return binding.root

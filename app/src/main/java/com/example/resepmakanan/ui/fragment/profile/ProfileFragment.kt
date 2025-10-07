@@ -48,9 +48,9 @@ class ProfileFragment : Fragment() {
         tvEmail.text = email
         tvPassword.text = password?.replace(Regex("."), "•")
 
-        // Tombol Edit
+        // Tombol Edit Profile
         btnEditProfile.setOnClickListener {
-            // findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+            findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
         // Tombol Logout

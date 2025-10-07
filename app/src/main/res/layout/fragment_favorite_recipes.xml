@@ -1,43 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@drawable/bg"
     android:padding="8dp">
 
-    <!-- 🔹 Teks jika kosong -->
-    <TextView
-        android:id="@+id/emptyTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Belum ada resep favorit 😢"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:padding="16dp"
-        android:visibility="gone"
-        android:textColor="@android:color/darker_gray" />
-
+    <!-- 🔹 Tombol hapus di bagian atas -->
     <ImageButton
         android:id="@+id/delete_favorite"
         android:layout_width="36dp"
         android:layout_height="36dp"
+        android:layout_gravity="end"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_delete"
         android:contentDescription="Hapus dari favorit"
-        app:tint="@android:color/holo_red_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:tint="@android:color/holo_red_dark" />
 
+    <!-- 🔹 Wrapper kosong di tengah -->
+    <LinearLayout
+        android:id="@+id/emptyWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
+        <!-- 🔹 Emote kalau kosong -->
+        <ImageView
+            android:id="@+id/emptyImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/emote"
+            android:alpha="0.5" />
+
+        <!-- 🔹 Teks jika kosong -->
+        <TextView
+            android:id="@+id/emptyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Belum ada resep favorit 😢"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:textColor="@android:color/darker_gray" />
+    </LinearLayout>
 
     <!-- 🔹 Daftar favorit -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favoriteRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clipToPadding="false"
         android:padding="4dp" />
 

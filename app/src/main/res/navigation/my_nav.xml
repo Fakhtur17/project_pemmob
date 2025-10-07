@@ -3,9 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/logoFragment">
 
-    <!-- LOGIN -->
+    <!-- 🌟 SPLASH / LOGO -->
+    <fragment
+        android:id="@+id/logoFragment"
+        android:name="com.example.resepmakanan.ui.fragment.LogoFragment"
+        android:label="Logo"
+        tools:layout="@layout/fragment_logo">
+        <action
+            android:id="@+id/action_logoFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/logoFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- 🔐 LOGIN -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.resepmakanan.ui.fragment.LoginFragment"
@@ -24,7 +37,7 @@
             app:destination="@id/registerFragment" />
     </fragment>
 
-    <!-- REGISTER -->
+    <!-- 📝 REGISTER -->
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.resepmakanan.ui.fragment.RegisterFragment"
@@ -37,14 +50,14 @@
             app:popUpToInclusive="true" />
     </fragment>
 
-    <!-- HOME -->
+    <!-- 🏠 HOME -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.resepmakanan.ui.fragment.HomeFragment"
         android:label="Dashboard"
         tools:layout="@layout/home">
 
-        <!-- ✅ ke halaman profil -->
+        <!-- ✅ Navigasi -->
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
@@ -52,42 +65,58 @@
         <action
             android:id="@+id/action_homeFragment_to_recipesFragment"
             app:destination="@id/recipesFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_favoriteRecipesFragment"
+            app:destination="@id/favoriteRecipesFragment" />
     </fragment>
 
-    <!-- RESEP -->
+    <!-- 🍳 RESEP -->
     <fragment
         android:id="@+id/recipesFragment"
         android:name="com.example.resepmakanan.ui.fragment.recipes.RecipesFragment"
         android:label="Recipes"
         tools:layout="@layout/fragment_recipes" />
 
-    <!-- FAVORIT -->
+    <!-- 💛 FAVORIT -->
     <fragment
         android:id="@+id/favoriteRecipesFragment"
         android:name="com.example.resepmakanan.ui.fragment.favorites.FavoriteRecipesFragment"
         android:label="Favorites"
         tools:layout="@layout/fragment_favorite_recipes" />
 
-    <!-- PROFILE -->
+    <!-- ✏️ EDIT PROFIL -->
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.resepmakanan.ui.fragment.profile.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_profile" />
+
+    <!-- 👤 PROFIL -->
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.resepmakanan.ui.fragment.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile">
 
-        <!-- ✅ Tambahkan action kembali ke Home -->
+        <!-- ✅ Back ke Home -->
         <action
             android:id="@+id/action_profileFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
 
-        <!-- ✅ Action logout kembali ke login -->
+        <!-- ✅ Logout -->
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
+
+        <!-- ✅ Edit Profil -->
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
 
 </navigation>

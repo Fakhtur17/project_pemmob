@@ -41,7 +41,12 @@ class FavoriteRecipesFragment : Fragment() {
             val updatedList = favoriteManager.getFavorites()
             adapter.setData(updatedList) // refresh RecyclerView
 
-            binding.emptyTextView.isVisible = updatedList.isEmpty()
+            // 🔹 Tampilkan teks & emote jika kosong
+            val isEmpty = updatedList.isEmpty()
+            binding.emptyTextView.isVisible = isEmpty
+            binding.emptyImageView.isVisible = isEmpty
+            binding.favoriteRecyclerView.isVisible = !isEmpty
+
             Toast.makeText(requireContext(), "Resep dihapus dari favorit", Toast.LENGTH_SHORT).show()
         }
 
@@ -52,6 +57,11 @@ class FavoriteRecipesFragment : Fragment() {
         super.onResume()
         val favorites = favoriteManager.getFavorites()
         adapter.setData(favorites)
-        binding.emptyTextView.isVisible = favorites.isEmpty()
+
+        // 🔹 Cek apakah kosong → tampilkan emote & teks
+        val isEmpty = favorites.isEmpty()
+        binding.emptyTextView.isVisible = isEmpty
+        binding.emptyImageView.isVisible = isEmpty
+        binding.favoriteRecyclerView.isVisible = !isEmpty
     }
 }

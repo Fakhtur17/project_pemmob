@@ -16,7 +16,8 @@ class DetailPagerAdapter(
         return when (position) {
             0 -> OverviewFragment.newInstance(result)
             1 -> IngredientsFragment.newInstance(result.extendedIngredients ?: emptyList())
-            else -> InstructionsFragment.newInstance(result.instructions ?: "")
+            else -> InstructionsFragment.newInstance(result.sourceUrl ?: "")
+
         }
     }
 }

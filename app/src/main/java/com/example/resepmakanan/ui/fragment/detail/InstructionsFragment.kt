@@ -1,58 +1,56 @@
 package com.example.resepmakanan.ui.fragment.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.core.text.HtmlCompat
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.resepmakanan.databinding.FragmentInstructionsBinding
+import com.example.resepmakanan.R
 
 class InstructionsFragment : Fragment() {
 
-    private var _binding: FragmentInstructionsBinding? = null
-    private val binding get() = _binding!!
+    companion object {
+        private const val ARG_SOURCE_URL = "sourceUrl"
 
-    private var instructions: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // Ambil argumen dari bundle, bisa null
-        instructions = requireArguments().getString("instructions")
+        fun newInstance(sourceUrl: String): InstructionsFragment {
+            val fragment = InstructionsFragment()
+            val args = Bundle()
+            args.putString(ARG_SOURCE_URL, sourceUrl)
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentInstructionsBinding.inflate(inflater, container, false)
-        return binding.root
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // 🔹 Gunakan layout yang sudah kamu buat di atas
+        return inflater.inflate(R.layout.fragment_instructions, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Jika instruksi kosong, tampilkan default message
-        val htmlInstructions = instructions ?: "No instructions available"
+        val sourceUrl = arguments?.getString(ARG_SOURCE_URL)
+        val linkTextView = view.findViewById<TextView>(R.id.linkTextView)
+        val instructionsTextView = view.findViewById<TextView>(R.id.instructionsTextView)
 
-        // Parsing HTML supaya tag tag di-instruksi tampil benar
-        binding.instructionsTextView.text = HtmlCompat.fromHtml(htmlInstructions, HtmlCompat.FROM_HTML_MODE_LEGACY)
-
-        // Supaya link di TextView bisa diklik (jika ada)
-        binding.instructionsTextView.movementMethod = LinkMovementMethod.getInstance()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    companion object {
-        fun newInstance(instructions: String?): InstructionsFragment {
-            return InstructionsFragment().apply {
-                arguments = bundleOf("instructions" to instructions)
+        // Kalau sourceUrl tidak kosong, tampilkan link
+        if (!sourceUrl.isNullOrEmpty()) {
+            linkTextView.visibility = View.VISIBLE
+            linkTextView.text = "Lihat Sumber Resep"
+            linkTextView.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(sourceUrl))
+                startActivity(intent)
             }
+        } else {
+            linkTextView.visibility = View.GONE
+            instructionsTextView.text = "Tidak ada link sumber resep."
         }
     }
 }
